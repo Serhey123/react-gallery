@@ -4,7 +4,9 @@ import React from 'react';
 import style from './Container.module.css';
 
 export default function Container({ children }) {
-  return <div className={style.section}>{children}</div>;
+  return (
+    <div className={`${style.section} ${style.container}`}>{children}</div>
+  );
 }
 
 Container.propTypes = {
