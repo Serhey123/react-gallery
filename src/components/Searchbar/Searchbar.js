@@ -7,11 +7,15 @@ class Searchbar extends React.Component {
   };
 
   inputHandler = e => {
-    this.setState({ query: e.target.value });
+    this.setState({ query: e.currentTarget.value.toLowerCase() });
   };
 
   submitHandler = e => {
     e.preventDefault();
+
+    if (this.state.query.trim() === '') {
+      return;
+    }
     this.props.onSubmit(this.state.query);
     this.setState({ query: '' });
   };

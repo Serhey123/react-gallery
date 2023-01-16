@@ -1,32 +1,49 @@
 import React, { Component } from 'react';
+import GalleryRender from './components/GalleryRender/GalleryRender';
+import Searchbar from './components/Searchbar/Searchbar';
 
 import Container from './components/Container/Container';
-import Searchbar from './components/Searchbar/Searchbar';
 import ImageGallery from './components/ImageGallery/ImageGallery';
-import LoadBtn from './components/LoadBtn/LoadBtn';
+// import { ColorRing } from 'react-loader-spinner';
+// import LoadBtn from './components/LoadBtn/LoadBtn';
+
+// const KEY = '31608339-0446588eb00af9daeb22c7801';
 
 class App extends Component {
   state = {
     query: '',
+    images: [],
     page: 1,
-  }; 
+  };
 
-  onSubmit = (query) =>{
-    this.setState({query: query})
-  }
+  onFetch = res => {
+    this.setState(prevState => ({
+      images: [...prevState.images, ...res.hits],
+    }));
+  };
 
-  btnHandler = () => {
+  onSubmit = query => {
+    this.setState({ query: query, images: [], page: 1 });
+  };
+
+  onClick = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
   render() {
     return (
       <React.StrictMode>
-        <Searchbar onSubmit={this.onSubmit}/>
+        <Searchbar onSubmit={this.onSubmit} />
         <Container>
-          <ImageGallery query={this.state.query} page={this.state.page}/>
+          <ImageGallery query={this.state.query} images={this.state.images} />
         </Container>
-        <LoadBtn btnHandler={this.btnHandler}/>
+        <GalleryRender
+          onClick={this.onClick}
+          onFetch={this.onFetch}
+          query={this.state.query}
+          images={this.state.images}
+          page={this.state.page}
+        />
       </React.StrictMode>
     );
   }
