@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { ColorRing } from 'react-loader-spinner';
 import LoadBtn from '../LoadBtn/LoadBtn';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const KEY = '31608339-0446588eb00af9daeb22c7801';
 
@@ -28,6 +29,9 @@ class GalleryRender extends Component {
           if (res.totalHits < 12 || res.hits.length < 12) {
             this.setState({ status: 'idle' });
           }
+          if (res.totalHits === 0) {
+            this.setState({ status: 'not found' });
+          }
           this.props.onFetch(res);
         });
     }
@@ -49,6 +53,9 @@ class GalleryRender extends Component {
           colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
         />
       );
+    }
+    if (this.state.status === 'not found') {
+      return <ErrorMessage />;
     }
   }
 }

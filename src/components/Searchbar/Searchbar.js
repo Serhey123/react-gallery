@@ -23,6 +23,7 @@ class Searchbar extends React.Component {
   render() {
     return (
       <header className={styles.Searchbar}>
+        <h1>Gallery</h1>
         <form className={styles.SearchForm} onSubmit={this.submitHandler}>
           <button type="submit" className={styles['SearchForm-button']}>
             <span className={styles['SearchForm-button-label']}>Search</span>
