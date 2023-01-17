@@ -4,10 +4,6 @@ import Searchbar from './components/Searchbar/Searchbar';
 
 import Container from './components/Container/Container';
 import ImageGallery from './components/ImageGallery/ImageGallery';
-// import { ColorRing } from 'react-loader-spinner';
-// import LoadBtn from './components/LoadBtn/LoadBtn';
-
-// const KEY = '31608339-0446588eb00af9daeb22c7801';
 
 class App extends Component {
   state = {
@@ -33,6 +29,7 @@ class App extends Component {
   render() {
     return (
       <React.StrictMode>
+
         <Searchbar onSubmit={this.onSubmit} />
         <Container>
           <ImageGallery query={this.state.query} images={this.state.images} />

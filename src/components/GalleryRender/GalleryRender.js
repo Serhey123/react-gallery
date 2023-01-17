@@ -22,7 +22,7 @@ class GalleryRender extends Component {
         .then(res => res.json())
         .then(res => {
           console.log(res);
-          if (res.totalHits > 12) {
+          if (res.totalHits >= 12) {
             this.setState({ status: 'resolved' });
           }
           if (res.totalHits < 12 || res.hits.length < 12) {
