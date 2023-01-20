@@ -1,49 +1,40 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import GalleryRender from './components/GalleryRender/GalleryRender';
 import Searchbar from './components/Searchbar/Searchbar';
 
 import Container from './components/Container/Container';
 import ImageGallery from './components/ImageGallery/ImageGallery';
 
-class App extends Component {
-  state = {
-    query: '',
-    images: [],
-    page: 1,
+function App() {
+  const [query, setQuery] = useState('');
+  const [images, setImages] = useState([]);
+  const [page, setPage] = useState(1);
+
+  const onFetch = res => {
+    setImages(prevState => [...prevState, ...res.hits]);
   };
 
-  onFetch = res => {
-    this.setState(prevState => ({
-      images: [...prevState.images, ...res.hits],
-    }));
+  const onSubmit = query => {
+    setQuery(query);
+    setImages([]);
+    setPage(1);
   };
 
-  onSubmit = query => {
-    this.setState({ query: query, images: [], page: 1 });
-  };
-
-  onClick = () => {
-    this.setState(prevState => ({ page: prevState.page + 1 }));
-  };
-
-  render() {
-    return (
-      <React.StrictMode>
-
-        <Searchbar onSubmit={this.onSubmit} />
-        <Container>
-          <ImageGallery query={this.state.query} images={this.state.images} />
-        </Container>
-        <GalleryRender
-          onClick={this.onClick}
-          onFetch={this.onFetch}
-          query={this.state.query}
-          images={this.state.images}
-          page={this.state.page}
-        />
-      </React.StrictMode>
-    );
-  }
+  return (
+    <React.StrictMode>
+      <Searchbar onSubmit={onSubmit} />
+      <Container>
+        <ImageGallery query={query} images={images} />
+      </Container>
+      <GalleryRender
+        onClick={() => setPage(prevState => prevState + 1)}
+        onFetch={onFetch}
+        query={query}
+        images={images}
+        page={page}
+      />
+    </React.StrictMode>
+  );
 }
 
 export default App;
